@@ -1,8 +1,12 @@
 import React from 'react';
+import Navbar from './components/widgets/navbar/Navbar';
 
 const App = () => {
   return (
-    <h1>react redux app</h1>
+    <div>
+      <Navbar />
+      <h1>react redux app</h1>
+    </div>
   );
 }
 
