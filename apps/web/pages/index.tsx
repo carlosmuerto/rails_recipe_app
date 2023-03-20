@@ -1,11 +1,13 @@
 import { Button, LoginForm } from "ui";
+import { Typography, } from  '@mui/material';
 
-export default function Web() {
+const Web = () => {
   return (
     <div>
-      <h1>Web</h1>
       <Button />
       <LoginForm />
     </div>
   );
 }
+
+export default Web; 

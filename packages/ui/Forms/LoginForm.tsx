@@ -7,13 +7,10 @@ import {
   Typography,
 } from '@mui/material'
 import { useForm, SubmitHandler } from 'react-hook-form'
-import { literal, object, string, TypeOf } from 'zod'
+import { object, string, TypeOf } from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useEffect, useState } from 'react'
 import { LoadingButton } from '@mui/lab'
-import Checkbox from '@mui/material/Checkbox'
-import React from 'react'
-import PropTypes from 'prop-types'
 
 const loginSchema = object({
   email: string().nonempty('Email is required').email('Email is invalid'),
