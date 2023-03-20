@@ -24,6 +24,9 @@ const AuthLayout = ({ children }: AuthLayoutnProps) => {
             alignItems: 'center',
           }}
         >
+          <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
+            <LockOutlinedIcon />
+          </Avatar>
           {children}
         </Box>
       </Container>
