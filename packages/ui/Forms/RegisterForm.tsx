@@ -1,17 +1,18 @@
-import {
-  Box,
-  FormControlLabel,
-  FormGroup,
-  FormHelperText,
-  TextField,
-  Typography,
-} from '@mui/material'
 import { useForm, SubmitHandler } from 'react-hook-form'
 import { literal, object, string, TypeOf } from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { useEffect, useState } from 'react'
-import LoadingButton from '@mui/lab/LoadingButton'
+import { Fragment, useEffect, useState } from 'react'
+import { LoadingButton } from '@mui/lab'
 import Checkbox from '@mui/material/Checkbox'
+import Link from '@mui/material/Link'
+import Grid from '@mui/material/Grid'
+import Box from '@mui/material/Box'
+import Typography from '@mui/material/Typography'
+import TextField from '@mui/material/TextField'
+import Button from '@mui/material/Button'
+import FormControlLabel from '@mui/material/FormControlLabel'
+import FormGroup from '@mui/material/FormGroup'
+import FormHelperText from '@mui/material/FormHelperText'
 
 const registerSchema = object({
   name: string()
@@ -58,55 +59,65 @@ const RegisterForm = () => {
   console.log(errors)
 
   return (
-    <Box sx={{ maxWidth: '30rem' }}>
-      <Typography variant="h4" component="h1" sx={{ mb: '2rem' }}>
-        Register
+    <Fragment>
+      <Typography component="h1" variant="h5">
+        Sign up
       </Typography>
       <Box
         component="form"
         noValidate
-        autoComplete="off"
         onSubmit={handleSubmit(onSubmitHandler)}
+        sx={{ mt: 1 }}
       >
         <TextField
-          sx={{ mb: 2 }}
-          label="Name"
+          margin="normal"
           fullWidth
+          id="name"
+          label="Full Name"
+          placeholder="Full Name"
+          autoComplete="name"
+          autoFocus
           required
+          {...register('name')}
           error={!!errors['name']}
           helperText={errors['name'] ? errors['name'].message : ''}
-          {...register('name')}
         />
         <TextField
-          sx={{ mb: 2 }}
-          label="Email"
+          margin="normal"
           fullWidth
+          id="email"
+          label="Email Address"
+          placeholder="Email Address"
+          autoComplete="email"
           required
-          type="email"
+          {...register('email')}
           error={!!errors['email']}
           helperText={errors['email'] ? errors['email'].message : ''}
-          {...register('email')}
         />
         <TextField
-          sx={{ mb: 2 }}
-          label="Password"
+          margin="normal"
           fullWidth
-          required
+          label="Password"
           type="password"
+          id="password"
+          placeholder="Password"
+          autoComplete="new-password"
+          required
           error={!!errors['password']}
           helperText={errors['password'] ? errors['password'].message : ''}
           {...register('password')}
         />
         <TextField
-          sx={{ mb: 2 }}
-          label="Confirm Password"
+          margin="normal"
           fullWidth
-          required
+          label="passwordConfirm"
           type="password"
+          id="passwordConfirm"
+          placeholder="password Confirm"
+          autoComplete="new-password"
+          required
           error={!!errors['passwordConfirm']}
-          helperText={
-            errors['passwordConfirm'] ? errors['passwordConfirm'].message : ''
-          }
+          helperText={errors['passwordConfirm'] ? errors['passwordConfirm'].message : ''}
           {...register('passwordConfirm')}
         />
 
@@ -130,15 +141,25 @@ const RegisterForm = () => {
           fullWidth
           type="submit"
           loading={loading}
-          sx={{ py: '0.8rem', mt: '1rem' }}
+          sx={{ mt: 3, mb: 2 }}
         >
-          Register
+          SIGN UP
         </LoadingButton>
+        <Grid container>
+          <Grid item xs>
+            {/* <Link href="#" variant="body2">
+              Forgot password?
+            </Link> */}
+          </Grid>
+          <Grid item>
+            <Link href="#" variant="body2">
+              {"Already have an account? Sign in"}
+            </Link>
+          </Grid>
+        </Grid>
       </Box>
-    </Box>
+    </Fragment>
   )
 }
 
-export {
-  RegisterForm
-}
+export { RegisterForm }

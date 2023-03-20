@@ -1,12 +1,11 @@
-import { Button, LoginForm } from "ui";
-import { Typography, } from  '@mui/material';
+import { RegisterForm } from "ui";
+import AuthLayout from "ui/Layouts/AuthLayout";
 
 const Web = () => {
   return (
-    <div>
-      <Button />
-      <LoginForm />
-    </div>
+    <AuthLayout>
+      <RegisterForm />
+    </AuthLayout>
   );
 }
 
