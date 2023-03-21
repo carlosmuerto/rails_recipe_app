@@ -43,7 +43,7 @@ const IngredientsRow = ({id}: IngredientsRowProps) => {
           {food.name}
           </TableCell>
           <TableCell align="right">{Ingredient.parsePricePerUnit(food)}</TableCell>
-          <TableCell align="right">{food.quantity}</TableCell>
+          <TableCell align="right">{Ingredient.parseQuantityUnit(food)}</TableCell>
           <TableCell align="right">
           <Fab color="primary" aria-label="add" onClick={handleShow}>
               <SearchIcon /> 

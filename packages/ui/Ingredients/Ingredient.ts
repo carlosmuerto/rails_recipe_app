@@ -58,6 +58,9 @@ const MockUp = [
 const parsePricePerUnit = (food: Ingredient) =>
   `${food.price_per_unit}\$ per ${food.unit}`
 
-export { create, IngredientUnit as UNITS, MockUp, parsePricePerUnit }
+  const parseQuantityUnit = (food: Ingredient) =>
+    `${food.quantity} ${food.unit}`
+
+export { create, IngredientUnit as UNITS, MockUp, parsePricePerUnit, parseQuantityUnit }
 
 export type { Ingredient as itr }
