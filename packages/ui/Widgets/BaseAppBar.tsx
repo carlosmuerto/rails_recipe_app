@@ -13,7 +13,7 @@ import Tooltip from '@mui/material/Tooltip'
 import MenuItem from '@mui/material/MenuItem'
 import MenuBookIcon from '@mui/icons-material/MenuBook';
 
-const pages = ['Ingredients', 'Recipes']
+const pages = ['My Ingredients', 'My Recipes', 'Public Recipes']
 const settings = ['Profile', 'Logout']
 
 const BaseAppBar = () => {
