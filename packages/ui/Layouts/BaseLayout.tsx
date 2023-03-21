@@ -1,12 +1,11 @@
-import CssBaseline from '@mui/material/CssBaseline'
 import Box from '@mui/material/Box'
 import Container from '@mui/material/Container'
 import PropTypes from 'prop-types'
-import Avatar from '@mui/material/Avatar'
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined'
 import { Fragment } from 'react'
 import ThemeProviderLayout from './ThemeProviderLayout'
-import ResponsiveAppBar from './ResponsiveAppBar'
+import BaseAppBar from '../Widgets/BaseAppBar'
+import Copyright from '../Widgets/Copyright'
 
 const propTypes = {
   children: PropTypes.element.isRequired,
@@ -17,7 +16,7 @@ const BaseLayout = ({ children }: BaseLayoutnProps) => {
   return (
     <ThemeProviderLayout>
       <Fragment>
-        <ResponsiveAppBar />
+        <BaseAppBar />
         <Container component="main" maxWidth="lg">
           <Box
             sx={{
@@ -29,6 +28,7 @@ const BaseLayout = ({ children }: BaseLayoutnProps) => {
           >
             {children}
           </Box>
+          <Copyright sx={{ mt: 8, mb: 4 }} />
         </Container>
       </Fragment>
     </ThemeProviderLayout>

@@ -16,7 +16,7 @@ import MenuBookIcon from '@mui/icons-material/MenuBook';
 const pages = ['Ingredients', 'Recipes']
 const settings = ['Profile', 'Logout']
 
-const ResponsiveAppBar = () => {
+const BaseAppBar = () => {
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null)
   const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null)
 
@@ -159,4 +159,4 @@ const ResponsiveAppBar = () => {
     </AppBar>
   )
 }
-export default ResponsiveAppBar
+export default BaseAppBar
