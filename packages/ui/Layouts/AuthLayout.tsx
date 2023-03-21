@@ -4,8 +4,8 @@ import Container from '@mui/material/Container'
 import PropTypes from 'prop-types'
 import Avatar from '@mui/material/Avatar'
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined'
-import { Fragment } from 'react'
 import ThemeProviderLayout from './ThemeProviderLayout'
+import Copyright from '../Widgets/Copyright'
 
 const propTypes = {
   children: PropTypes.element.isRequired,
@@ -28,6 +28,7 @@ const AuthLayout = ({ children }: AuthLayoutnProps) => {
             <LockOutlinedIcon />
           </Avatar>
           {children}
+          <Copyright sx={{ mt: 8, mb: 4 }} />
         </Box>
       </Container>
     </ThemeProviderLayout>

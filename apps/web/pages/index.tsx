@@ -1,11 +1,12 @@
-import { RegisterForm } from "ui";
-import AuthLayout from "ui/Layouts/AuthLayout";
+import BaseLayout from "ui/Layouts/BaseLayout";
+import RegisterForm from "ui/Forms/RegisterForm";
+import IngredientsList from "ui/Ingredients/IngredientsList";
 
 const Web = () => {
   return (
-    <AuthLayout>
-      <RegisterForm />
-    </AuthLayout>
+    <BaseLayout>
+      <IngredientsList />
+    </BaseLayout>
   );
 }
 
