@@ -162,4 +162,4 @@ const RegisterForm = () => {
   )
 }
 
-export { RegisterForm }
+export default RegisterForm
