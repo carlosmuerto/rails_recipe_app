@@ -1,25 +1,19 @@
-import * as React from 'react'
-import Table from '@mui/material/Table'
-import TableBody from '@mui/material/TableBody'
 import TableCell from '@mui/material/TableCell'
-import TableContainer from '@mui/material/TableContainer'
-import TableHead from '@mui/material/TableHead'
+import Box from '@mui/material/Box'
 import TableRow from '@mui/material/TableRow'
 import PropTypes from 'prop-types'
-import Paper from '@mui/material/Paper'
-import Fab from '@mui/material/Fab';
-import SearchIcon from '@mui/icons-material/Search';
-import EditIcon from '@mui/icons-material/Edit';
-import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
+import Fab from '@mui/material/Fab'
+import SearchIcon from '@mui/icons-material/Search'
+import EditIcon from '@mui/icons-material/Edit'
+import DeleteForeverIcon from '@mui/icons-material/DeleteForever'
 import * as Ingredient from './Ingredient'
-
 
 const propTypes = {
   id: PropTypes.number.isRequired,
 }
 type IngredientsRowProps = PropTypes.InferProps<typeof propTypes>
 
-const IngredientsRow = ({id}: IngredientsRowProps) => {
+const IngredientsRow = ({ id }: IngredientsRowProps) => {
   const food = Ingredient.MockUp.find((e) => e.id === id)
   if (food) {
     const handleShow = () => {
@@ -36,31 +30,35 @@ const IngredientsRow = ({id}: IngredientsRowProps) => {
 
     return (
       <TableRow
-          key={food.id}
-          sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+        key={food.id}
+        sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
       >
-          <TableCell component="th" scope="row">
+        <TableCell component="th" scope="row">
           {food.name}
-          </TableCell>
-          <TableCell align="right">{Ingredient.parsePricePerUnit(food)}</TableCell>
-          <TableCell align="right">{Ingredient.parseQuantityUnit(food)}</TableCell>
-          <TableCell align="right">
-          <Fab color="primary" aria-label="add" onClick={handleShow}>
-              <SearchIcon /> 
-          </Fab>
-          <Fab color="secondary" aria-label="edit" onClick={handleEdit}>
+        </TableCell>
+        <TableCell align="right">
+          {Ingredient.parsePricePerUnit(food)}
+        </TableCell>
+        <TableCell align="right">
+          {Ingredient.parseQuantityUnit(food)}
+        </TableCell>
+        <TableCell align="right">
+          <Box sx={{ '& > :not(style)': { m: 1 } }}>
+            <Fab color="primary" aria-label="add" onClick={handleShow}>
+              <SearchIcon />
+            </Fab>
+            <Fab color="secondary" aria-label="edit" onClick={handleEdit}>
               <EditIcon />
-          </Fab>
-          <Fab color="error" aria-label="edit" onClick={handleDelete}>
+            </Fab>
+            <Fab color="error" aria-label="edit" onClick={handleDelete}>
               <DeleteForeverIcon />
-          </Fab>
-          </TableCell>
+            </Fab>
+          </Box>
+        </TableCell>
       </TableRow>
     )
   } else {
-    return (
-      <div></div>
-    )
+    return <div></div>
   }
 }
 
