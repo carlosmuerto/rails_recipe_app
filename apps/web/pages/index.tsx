@@ -1,11 +1,11 @@
 import BaseLayout from "ui/Layouts/BaseLayout";
 import RegisterForm from "ui/Forms/RegisterForm";
-import IngredientsList from "ui/Ingredients/IngredientsList";
+import AddIngredientFrom from "ui/Ingredients/AddIngredientFrom";
 
 const Web = () => {
   return (
     <BaseLayout>
-      <IngredientsList />
+      <AddIngredientFrom />
     </BaseLayout>
   );
 }
