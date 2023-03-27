@@ -1,11 +1,10 @@
-import BaseLayout from "ui/Layouts/BaseLayout";
-import { AddForm } from 'ui/Ingredients/AddForm/index';
+import * as Auth from "ui/Auth";
 
 const Web = () => {
   return (
-    <BaseLayout>
-      <AddForm />
-    </BaseLayout>
+    <Auth.Layout>
+      <Auth.LogIn.Form />
+    </Auth.Layout>
   );
 }
 

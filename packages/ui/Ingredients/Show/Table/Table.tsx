@@ -5,8 +5,8 @@ import TableContainer from '@mui/material/TableContainer'
 import TableHead from '@mui/material/TableHead'
 import TableRow from '@mui/material/TableRow'
 import Paper from '@mui/material/Paper'
-import * as Ingredient from './Ingredient'
-import IngredientsRow from './IngredientRow'
+import * as Ingredient from '../../model'
+import { Row } from './Row'
 
 
 const IngredientsList = () => {
@@ -24,7 +24,7 @@ const IngredientsList = () => {
         </TableHead>
         <TableBody>
           {Ingredient.MockUp.map((food) => (
-            <IngredientsRow key = {food.id} id = {food.id}/>
+            <Row key = {food.id} id = {food.id}/>
           ))}
         </TableBody>
       </Table>

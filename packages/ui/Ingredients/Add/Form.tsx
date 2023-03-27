@@ -7,18 +7,18 @@ import Autocomplete from '@mui/material/Autocomplete'
 import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
 import TextField from '@mui/material/TextField'
-import * as Ingredient from '../Ingredient'
+import * as Ingredient from '../model'
 
-const AddFormSchema = z.object({
+const IngredientsAddFormSchema = z.object({
   ingredient_id: z.number(),
   quantity: z.number().nonnegative(),
 })
 
-type AddFormInput = z.TypeOf<typeof AddFormSchema>
+type IngredientsAddFormInput = z.TypeOf<typeof IngredientsAddFormSchema>
 
-const AddForm = () => {
+const IngredientsAddForm = () => {
   const [loading, setLoading] = useState(false)
-  const [selectedIngedient, setSelectedIngedient] = useState<Ingredient.itr>()
+  const [selectedIngedient, setSelectedIngedient] = useState<Ingredient.TYPE>()
   const [quantity, setQuantity] = useState<number>(0.0);
 
   const {
@@ -29,8 +29,8 @@ const AddForm = () => {
     control,
     setValue,
     getValues,
-  } = useForm<AddFormInput>({
-    resolver: zodResolver(AddFormSchema),
+  } = useForm<IngredientsAddFormInput>({
+    resolver: zodResolver(IngredientsAddFormSchema),
   })
 
   useEffect(() => {
@@ -40,7 +40,7 @@ const AddForm = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isSubmitSuccessful])
 
-  const onSubmitHandler: SubmitHandler<AddFormInput> = (values) => {
+  const onSubmitHandler: SubmitHandler<IngredientsAddFormInput> = (values) => {
     console.log(values)
   }
   // console.log(errors)
@@ -111,4 +111,4 @@ const AddForm = () => {
   )
 }
 
-export default AddForm
+export default IngredientsAddForm

@@ -1,18 +1,16 @@
 import CssBaseline from '@mui/material/CssBaseline';
-import Container from '@mui/material/Container';
 import PropTypes from 'prop-types'
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import Copyright from '../Widgets/Copyright';
 
 const propTypes = {
   children: PropTypes.element.isRequired
 };
 
-type ThemeProviderLayoutProps = PropTypes.InferProps<typeof propTypes>;
+type BaseThemeProviderProps = PropTypes.InferProps<typeof propTypes>;
 
 const theme = createTheme();
 
-const ThemeProviderLayout = ({ children }:ThemeProviderLayoutProps) => {
+const BaseThemeProvider = ({ children }:BaseThemeProviderProps) => {
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
@@ -21,6 +19,6 @@ const ThemeProviderLayout = ({ children }:ThemeProviderLayoutProps) => {
   );
 }
 
-ThemeProviderLayout.propTypes = propTypes;
+BaseThemeProvider.propTypes = propTypes;
 
-export default ThemeProviderLayout
+export default BaseThemeProvider

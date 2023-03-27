@@ -1,36 +1,5 @@
-enum IngredientUnit {
-  g = 'g',
-  Kg = 'Kg',
-  lts = 'lts',
-  ml = 'ml',
-  piece = 'piece',
-}
-
-type IngredientUnitlStrings = keyof typeof IngredientUnit
-
-interface Ingredient {
-  id: number,
-  name: string
-  unit: IngredientUnit
-  price_per_unit: number
-  quantity: number
-}
-
-const create = (
-  id: number,
-  name: string,
-  unit: IngredientUnit,
-  price_per_unit: number,
-  quantity: number,
-) => {
-  return {
-    id: id,
-    name: name,
-    unit: unit,
-    price_per_unit: price_per_unit,
-    quantity: quantity,
-  }
-}
+import IngredientUnit from '../UNITS';
+import { create } from '../Utils';
 
 const MockUp = [
   create(1, 'Flour', IngredientUnit.g, 0.5, 500),
@@ -52,15 +21,6 @@ const MockUp = [
   create(17, 'Baking Soda', IngredientUnit.g, 1, 50),
   create(18, 'Vinegar', IngredientUnit.ml, 1, 100),
   create(19, 'Lemon Juice', IngredientUnit.ml, 2, 1),
-  create(20, 'Food Coloring', IngredientUnit.ml, 5, 1)
-  ]
-
-const parsePricePerUnit = (food: Ingredient) =>
-  `${food.price_per_unit}\$ per ${food.unit}`
-
-  const parseQuantityUnit = (food: Ingredient) =>
-    `${food.quantity} ${food.unit}`
-
-export { create, IngredientUnit as UNITS, MockUp, parsePricePerUnit, parseQuantityUnit }
-
-export type { Ingredient as itr }
+  create(20, 'Food Coloring', IngredientUnit.ml, 5, 1),
+]
+export default MockUp;
