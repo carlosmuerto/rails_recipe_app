@@ -3,8 +3,8 @@ import Container from '@mui/material/Container'
 import PropTypes from 'prop-types'
 import { Fragment } from 'react'
 import * as Theme from '../Theme'
-import AppBar from '../Widgets/AppBar'
-import Copyright from '../Widgets/Copyright'
+import AppBar from '../AppBar'
+import Copyright from '../Copyright'
 
 const propTypes = {
   children: PropTypes.element.isRequired,

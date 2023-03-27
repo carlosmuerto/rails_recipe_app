@@ -1,9 +1,10 @@
-import * as Auth from "ui/Auth";
+import BaseLayout from "ui/Base/Layout";
+import * as Auth from 'ui/Auth';
 
 const Web = () => {
   return (
     <Auth.Layout>
-      <Auth.LogIn.Form />
+      <Auth.LogIn />
     </Auth.Layout>
   );
 }
