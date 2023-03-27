@@ -1,11 +1,10 @@
-import CssBaseline from '@mui/material/CssBaseline'
 import Box from '@mui/material/Box'
 import Container from '@mui/material/Container'
 import PropTypes from 'prop-types'
 import Avatar from '@mui/material/Avatar'
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined'
-import ThemeProviderLayout from './ThemeProviderLayout'
-import Copyright from '../Widgets/Copyright'
+import * as Theme from '../../Base/Theme'
+import Copyright from '../../Base/Copyright'
 
 const propTypes = {
   children: PropTypes.element.isRequired,
@@ -14,7 +13,7 @@ type AuthLayoutnProps = PropTypes.InferProps<typeof propTypes>
 
 const AuthLayout = ({ children }: AuthLayoutnProps) => {
   return (
-    <ThemeProviderLayout>
+    <Theme.Provider>
       <Container component="main" maxWidth="xs">
         <Box
           sx={{
@@ -31,7 +30,7 @@ const AuthLayout = ({ children }: AuthLayoutnProps) => {
           <Copyright sx={{ mt: 8, mb: 4 }} />
         </Box>
       </Container>
-    </ThemeProviderLayout>
+    </Theme.Provider>
   )
 }
 

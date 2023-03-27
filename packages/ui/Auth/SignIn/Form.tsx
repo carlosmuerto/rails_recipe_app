@@ -1,5 +1,5 @@
 import { useForm, SubmitHandler } from 'react-hook-form'
-import { object, string, TypeOf } from 'zod'
+import { literal, object, string, TypeOf } from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Fragment, useEffect, useState } from 'react'
 import { LoadingButton } from '@mui/lab'
@@ -11,18 +11,30 @@ import Typography from '@mui/material/Typography'
 import TextField from '@mui/material/TextField'
 import Button from '@mui/material/Button'
 import FormControlLabel from '@mui/material/FormControlLabel'
+import FormGroup from '@mui/material/FormGroup'
+import FormHelperText from '@mui/material/FormHelperText'
 
-const loginSchema = object({
+const AuthSignInFromSchema = object({
+  name: string()
+    .nonempty('Name is required')
+    .max(32, 'Name must be less than 100 characters'),
   email: string().nonempty('Email is required').email('Email is invalid'),
   password: string()
     .nonempty('Password is required')
     .min(8, 'Password must be more than 8 characters')
     .max(32, 'Password must be less than 32 characters'),
+  passwordConfirm: string().nonempty('Please confirm your password'),
+  terms: literal(true, {
+    invalid_type_error: 'Accept Terms is required',
+  }),
+}).refine((data) => data.password === data.passwordConfirm, {
+  path: ['passwordConfirm'],
+  message: 'Passwords do not match',
 })
 
-type LoginInput = TypeOf<typeof loginSchema>
+type AuthSignInFromInput = TypeOf<typeof AuthSignInFromSchema>
 
-const LoginForm = () => {
+const AuthSignInFrom = () => {
   const [loading, setLoading] = useState(false)
 
   const {
@@ -30,8 +42,8 @@ const LoginForm = () => {
     formState: { errors, isSubmitSuccessful },
     reset,
     handleSubmit,
-  } = useForm<LoginInput>({
-    resolver: zodResolver(loginSchema),
+  } = useForm<AuthSignInFromInput>({
+    resolver: zodResolver(AuthSignInFromSchema),
   })
 
   useEffect(() => {
@@ -41,15 +53,15 @@ const LoginForm = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isSubmitSuccessful])
 
-  const onSubmitHandler: SubmitHandler<LoginInput> = (values) => {
+  const onSubmitHandler: SubmitHandler<AuthSignInFromInput> = (values) => {
     console.log(values)
   }
-  // console.log(errors)
+  console.log(errors)
 
   return (
     <Fragment>
       <Typography component="h1" variant="h5">
-        Sign in
+        Sign up
       </Typography>
       <Box
         component="form"
@@ -60,10 +72,23 @@ const LoginForm = () => {
         <TextField
           margin="normal"
           fullWidth
+          id="name"
+          label="Full Name"
+          placeholder="Full Name"
+          autoComplete="name"
+          autoFocus
+          required
+          {...register('name')}
+          error={!!errors['name']}
+          helperText={errors['name'] ? errors['name'].message : ''}
+        />
+        <TextField
+          margin="normal"
+          fullWidth
           id="email"
           label="Email Address"
+          placeholder="Email Address"
           autoComplete="email"
-          autoFocus
           required
           {...register('email')}
           error={!!errors['email']}
@@ -76,12 +101,40 @@ const LoginForm = () => {
           type="password"
           id="password"
           placeholder="Password"
-          autoComplete="current-password"
+          autoComplete="new-password"
           required
           error={!!errors['password']}
           helperText={errors['password'] ? errors['password'].message : ''}
           {...register('password')}
         />
+        <TextField
+          margin="normal"
+          fullWidth
+          label="passwordConfirm"
+          type="password"
+          id="passwordConfirm"
+          placeholder="password Confirm"
+          autoComplete="new-password"
+          required
+          error={!!errors['passwordConfirm']}
+          helperText={errors['passwordConfirm'] ? errors['passwordConfirm'].message : ''}
+          {...register('passwordConfirm')}
+        />
+
+        <FormGroup>
+          <FormControlLabel
+            control={<Checkbox required />}
+            {...register('terms')}
+            label={
+              <Typography color={errors['terms'] ? 'error' : 'inherit'}>
+                Accept Terms and Conditions
+              </Typography>
+            }
+          />
+          <FormHelperText error={!!errors['terms']}>
+            {errors['terms'] ? errors['terms'].message : ''}
+          </FormHelperText>
+        </FormGroup>
 
         <LoadingButton
           variant="contained"
@@ -90,17 +143,14 @@ const LoginForm = () => {
           loading={loading}
           sx={{ mt: 3, mb: 2 }}
         >
-          Sign In
+          SIGN UP
         </LoadingButton>
         <Grid container>
           <Grid item xs>
-            {/* <Link href="#" variant="body2">
-              Forgot password?
-            </Link> */}
           </Grid>
           <Grid item>
             <Link href="#" variant="body2">
-              {"Don't have an account? Sign Up"}
+              {"Already have an account? Sign in"}
             </Link>
           </Grid>
         </Grid>
@@ -109,4 +159,4 @@ const LoginForm = () => {
   )
 }
 
-export default LoginForm
+export default AuthSignInFrom

@@ -6,14 +6,14 @@ import Fab from '@mui/material/Fab'
 import SearchIcon from '@mui/icons-material/Search'
 import EditIcon from '@mui/icons-material/Edit'
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever'
-import * as Ingredient from './Ingredient'
+import * as Ingredient from '../../../model'
 
 const propTypes = {
   id: PropTypes.number.isRequired,
 }
-type IngredientsRowProps = PropTypes.InferProps<typeof propTypes>
+type IngredientsTableRowProps = PropTypes.InferProps<typeof propTypes>
 
-const IngredientsRow = ({ id }: IngredientsRowProps) => {
+const IngredientsTableRow = ({ id }: IngredientsTableRowProps) => {
   const food = Ingredient.MockUp.find((e) => e.id === id)
   if (food) {
     const handleShow = () => {
@@ -62,6 +62,6 @@ const IngredientsRow = ({ id }: IngredientsRowProps) => {
   }
 }
 
-IngredientsRow.propTypes = propTypes
+IngredientsTableRow.propTypes = propTypes
 
-export default IngredientsRow
+export default IngredientsTableRow
