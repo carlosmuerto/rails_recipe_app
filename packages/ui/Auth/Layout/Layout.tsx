@@ -4,7 +4,7 @@ import PropTypes from 'prop-types'
 import Avatar from '@mui/material/Avatar'
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined'
 import * as Theme from '../../Base/Theme'
-import Copyright from '../../Widgets/Copyright'
+import Copyright from '../../Base/Widgets/Copyright'
 
 const propTypes = {
   children: PropTypes.element.isRequired,

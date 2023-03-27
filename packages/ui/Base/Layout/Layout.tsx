@@ -3,8 +3,8 @@ import Container from '@mui/material/Container'
 import PropTypes from 'prop-types'
 import { Fragment } from 'react'
 import * as Theme from '../Theme'
-import BaseAppBar from '../../Widgets/BaseAppBar'
-import Copyright from '../../Widgets/Copyright'
+import AppBar from '../Widgets/AppBar'
+import Copyright from '../Widgets/Copyright'
 
 const propTypes = {
   children: PropTypes.element.isRequired,
@@ -15,7 +15,7 @@ const BaseLayout = ({ children }: BaseLayoutnProps) => {
   return (
     <Theme.Provider>
       <Fragment>
-        <BaseAppBar />
+        <AppBar />
         <Container component="main" maxWidth="lg">
           <Box
             sx={{
