@@ -14,7 +14,7 @@ import FormControlLabel from '@mui/material/FormControlLabel'
 import FormGroup from '@mui/material/FormGroup'
 import FormHelperText from '@mui/material/FormHelperText'
 
-const registerSchema = object({
+const signInSchema = object({
   name: string()
     .nonempty('Name is required')
     .max(32, 'Name must be less than 100 characters'),
@@ -32,9 +32,9 @@ const registerSchema = object({
   message: 'Passwords do not match',
 })
 
-type RegisterInput = TypeOf<typeof registerSchema>
+type SignInInput = TypeOf<typeof signInSchema>
 
-const RegisterForm = () => {
+const SignInForm = () => {
   const [loading, setLoading] = useState(false)
 
   const {
@@ -42,8 +42,8 @@ const RegisterForm = () => {
     formState: { errors, isSubmitSuccessful },
     reset,
     handleSubmit,
-  } = useForm<RegisterInput>({
-    resolver: zodResolver(registerSchema),
+  } = useForm<SignInInput>({
+    resolver: zodResolver(signInSchema),
   })
 
   useEffect(() => {
@@ -53,7 +53,7 @@ const RegisterForm = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isSubmitSuccessful])
 
-  const onSubmitHandler: SubmitHandler<RegisterInput> = (values) => {
+  const onSubmitHandler: SubmitHandler<SignInInput> = (values) => {
     console.log(values)
   }
   console.log(errors)
@@ -147,9 +147,6 @@ const RegisterForm = () => {
         </LoadingButton>
         <Grid container>
           <Grid item xs>
-            {/* <Link href="#" variant="body2">
-              Forgot password?
-            </Link> */}
           </Grid>
           <Grid item>
             <Link href="#" variant="body2">
@@ -162,4 +159,4 @@ const RegisterForm = () => {
   )
 }
 
-export default RegisterForm
+export default SignInForm

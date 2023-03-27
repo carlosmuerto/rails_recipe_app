@@ -4,37 +4,19 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { Fragment, useEffect, useState } from 'react'
 import { LoadingButton } from '@mui/lab'
 import Autocomplete from '@mui/material/Autocomplete'
-import Checkbox from '@mui/material/Checkbox'
-import Link from '@mui/material/Link'
-import Grid from '@mui/material/Grid'
 import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
 import TextField from '@mui/material/TextField'
-import Button from '@mui/material/Button'
-import FormControlLabel from '@mui/material/FormControlLabel'
-import PropTypes from 'prop-types'
-import Fab from '@mui/material/Fab'
-import SearchIcon from '@mui/icons-material/Search'
-import EditIcon from '@mui/icons-material/Edit'
-import DeleteForeverIcon from '@mui/icons-material/DeleteForever'
-import Table from '@mui/material/Table'
-import TableBody from '@mui/material/TableBody'
-import TableCell from '@mui/material/TableCell'
-import TableContainer from '@mui/material/TableContainer'
-import TableHead from '@mui/material/TableHead'
-import TableRow from '@mui/material/TableRow'
-import Paper from '@mui/material/Paper'
-import * as Ingredient from './Ingredient'
-import IngredientsRow from './IngredientRow'
+import * as Ingredient from '../Ingredient'
 
-const AddIngredientSchema = z.object({
+const AddFormSchema = z.object({
   ingredient_id: z.number(),
   quantity: z.number().nonnegative(),
 })
 
-type AddIngredientInput = z.TypeOf<typeof AddIngredientSchema>
+type AddFormInput = z.TypeOf<typeof AddFormSchema>
 
-const AddIngredientForm = () => {
+const AddForm = () => {
   const [loading, setLoading] = useState(false)
   const [selectedIngedient, setSelectedIngedient] = useState<Ingredient.itr>()
   const [quantity, setQuantity] = useState<number>(0.0);
@@ -47,8 +29,8 @@ const AddIngredientForm = () => {
     control,
     setValue,
     getValues,
-  } = useForm<AddIngredientInput>({
-    resolver: zodResolver(AddIngredientSchema),
+  } = useForm<AddFormInput>({
+    resolver: zodResolver(AddFormSchema),
   })
 
   useEffect(() => {
@@ -58,7 +40,7 @@ const AddIngredientForm = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isSubmitSuccessful])
 
-  const onSubmitHandler: SubmitHandler<AddIngredientInput> = (values) => {
+  const onSubmitHandler: SubmitHandler<AddFormInput> = (values) => {
     console.log(values)
   }
   // console.log(errors)
@@ -129,4 +111,4 @@ const AddIngredientForm = () => {
   )
 }
 
-export default AddIngredientForm
+export default AddForm
