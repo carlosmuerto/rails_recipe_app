@@ -16,7 +16,6 @@ const RecipesList = () => {
       <Table stickyHeader sx={{ minWidth: 650 }} size="small" aria-label="a dense table">
         <TableHead>
           <TableRow>
-            <TableCell align="right">id</TableCell>
             <TableCell align="right">Recipe</TableCell>
             <TableCell align="right">Actions</TableCell>
           </TableRow>

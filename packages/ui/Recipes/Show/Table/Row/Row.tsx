@@ -34,17 +34,8 @@ const RecipesTableRow = ({ id }: RecipesTableRowProps) => {
         sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
       >
         <TableCell component="th" scope="row">
-          {food.id}
-        </TableCell>
-        <TableCell component="th" scope="row">
           {food.name}
         </TableCell>
-        {/* <TableCell align="right">
-          {Recipe.parsePricePerUnit(food)}
-        </TableCell>
-        <TableCell align="right">
-          {Recipe.parseQuantityUnit(food)}
-        </TableCell> */}
         <TableCell align="right">
           <Box sx={{ '& > :not(style)': { m: 1 } }}>
             <Fab color="primary" aria-label="add" onClick={handleShow}>
