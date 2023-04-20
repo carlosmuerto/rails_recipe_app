@@ -7,11 +7,14 @@ import Autocomplete from '@mui/material/Autocomplete'
 import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
 import TextField from '@mui/material/TextField'
+import Checkbox from '@mui/material/Checkbox';
+import FormControlLabel from '@mui/material/FormControlLabel';
 import * as Ingredient from '../model'
 
 const RecipeAddFormSchema = z.object({
-  recipe_id: z.number(),
   name: z.string().nonempty(),
+  public: z.boolean().default(false),
+  description: z.string().nonempty(),
 })
 
 type RecipeAddFormInput = z.TypeOf<typeof RecipeAddFormSchema>
@@ -58,16 +61,28 @@ const RecipeAddForm = () => {
         <TextField
           margin="normal"
           fullWidth
-          id=""
           label="Name"
           placeholder="Name"
-          type="text"
-          inputMode="numeric"
-          error={!!errors['name']}
-          helperText={errors['name'] ? errors['name'].message : ''}
-          {...register('name', {
-            valueAsNumber: true,
-          })}
+          {...register('name')}
+        />
+
+        <TextField
+          margin="normal"
+          fullWidth
+          multiline
+          rows={4}
+          label="Description"
+          placeholder="Description"
+          {...register('description')}
+        />
+
+        <FormControlLabel
+          label="public"
+          control={
+            <Checkbox
+              {...register('public')} 
+            />
+          }
         />
 
         <LoadingButton
