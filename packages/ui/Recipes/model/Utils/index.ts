@@ -3,10 +3,18 @@ import Recipe from '../interface'
 const create = (
   id: number,
   name: string,
+  description: string,
+  isPublic: boolean = false,
+  preparationTimeSeconds: number = 60,
+  cookingTimeSeconds: number = 60
 ):Recipe => {
   return {
-    id: id,
-    name: name,
+    id,
+    name,
+    isPublic,
+    description,
+    preparationTimeSeconds,
+    cookingTimeSeconds,
   }
 }
 export { create }

@@ -1,6 +1,8 @@
 export default interface Recipe {
   id: number
   name: string
-  public: boolean
+  isPublic: boolean
   description: string
+  preparationTimeSeconds: number
+  cookingTimeSeconds: number
 }
