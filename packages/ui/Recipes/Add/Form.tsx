@@ -1,5 +1,4 @@
 import { useForm, SubmitHandler, Controller } from 'react-hook-form'
-import { z } from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Fragment, useEffect, useState } from 'react'
 import { LoadingButton } from '@mui/lab'
@@ -9,15 +8,7 @@ import Typography from '@mui/material/Typography'
 import TextField from '@mui/material/TextField'
 import Checkbox from '@mui/material/Checkbox';
 import FormControlLabel from '@mui/material/FormControlLabel';
-import * as Ingredient from '../model'
-
-const RecipeAddFormSchema = z.object({
-  name: z.string().nonempty(),
-  public: z.boolean().default(false),
-  description: z.string().nonempty(),
-})
-
-type RecipeAddFormInput = z.TypeOf<typeof RecipeAddFormSchema>
+import * as Recipe from '../model'
 
 const RecipeAddForm = () => {
   const [loading, setLoading] = useState(false)
@@ -31,8 +22,8 @@ const RecipeAddForm = () => {
     control,
     setValue,
     getValues,
-  } = useForm<RecipeAddFormInput>({
-    resolver: zodResolver(RecipeAddFormSchema),
+  } = useForm<Recipe.INTERFACE>({
+    resolver: zodResolver(Recipe.schema),
   })
 
   useEffect(() => {
@@ -42,7 +33,7 @@ const RecipeAddForm = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isSubmitSuccessful])
 
-  const onSubmitHandler: SubmitHandler<RecipeAddFormInput> = (values) => {
+  const onSubmitHandler: SubmitHandler<Recipe.INTERFACE> = (values) => {
     console.log(values)
   }
   // console.log(errors)
@@ -64,6 +55,8 @@ const RecipeAddForm = () => {
           label="Name"
           placeholder="Name"
           {...register('name')}
+          error={!!errors['name']}
+          helperText={errors['name'] ? errors['name'].message : ''}
         />
 
         <TextField
@@ -74,6 +67,8 @@ const RecipeAddForm = () => {
           label="Description"
           placeholder="Description"
           {...register('description')}
+          error={!!errors['description']}
+          helperText={errors['description'] ? errors['description'].message : ''}
         />
 
         <FormControlLabel
