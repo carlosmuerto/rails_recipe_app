@@ -9,12 +9,13 @@ import DeleteForeverIcon from '@mui/icons-material/DeleteForever'
 import * as Recipe from '../../../model'
 
 const propTypes = {
-  id: PropTypes.number.isRequired,
+  id: PropTypes.string.isRequired,
 }
 type RecipesTableRowProps = PropTypes.InferProps<typeof propTypes>
 
 const RecipesTableRow = ({ id }: RecipesTableRowProps) => {
   const food = Recipe.MockUp.find((e) => e.id === id)
+  console.log(food)
   if (food) {
     const handleShow = () => {
       console.log(`Show ${food.name}`)

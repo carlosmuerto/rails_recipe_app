@@ -11,6 +11,8 @@ import { Row } from './Row'
 
 const RecipesList = () => {
 
+  const recipesList = Recipe.MockUp;
+
   return (
     <TableContainer component={Paper}>
       <Table stickyHeader sx={{ minWidth: 650 }} size="small" aria-label="a dense table">
@@ -21,7 +23,7 @@ const RecipesList = () => {
           </TableRow>
         </TableHead>
         <TableBody>
-          {Recipe.MockUp.map((recipe) => (
+          {recipesList.map((recipe) => (
             <Row key = {recipe.id} id = {recipe.id}/>
           ))}
         </TableBody>

@@ -1,7 +1,7 @@
 import Recipe from '../interface'
 
 const create = (
-  id: number,
+  id: string,
   name: string,
   description: string,
   isPublic: boolean = false,

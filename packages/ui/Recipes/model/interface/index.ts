@@ -1,11 +1,12 @@
 import { z } from 'zod'
 
 const RecipeAddFormSchema = z.object({
+  id: z.string().uuid(),
   name: z.string().nonempty(),
-  public: z.boolean().default(false),
+  isPublic: z.boolean().default(false),
   description: z.string().nonempty(),
-  // preparationTimeSeconds: z.number().positive(),
-  // cookingTimeSeconds: z.number().positive(),
+  preparationTimeSeconds: z.number().positive(),
+  cookingTimeSeconds: z.number().positive(),
 })
 
 
