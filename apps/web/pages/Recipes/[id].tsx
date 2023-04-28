@@ -6,7 +6,7 @@ import * as Recipes from 'ui/Recipes';
 const IndexRecipes = () => {
   const router = useRouter()
   const { id } = router.query
-  const recipe = Recipes.model.MockUp.find(recipe => recipe.id === Number(id))
+  const recipe = Recipes.model.MockUp.find(recipe => recipe.id === id)
   if (recipe  === undefined) {
     return null
   }

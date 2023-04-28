@@ -2,7 +2,7 @@ import React from 'react';
 import { Card, CardHeader, CardContent, Typography } from '@mui/material';
 import * as Recipe from '../../model'
 
-const RecipeDetails: React.FC<Recipe.TYPE> = ({
+const RecipeDetails: React.FC<Recipe.INTERFACE> = ({
   name,
   description,
   isPublic,
