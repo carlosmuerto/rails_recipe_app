@@ -1,45 +1,58 @@
-import { useForm, SubmitHandler, Controller } from 'react-hook-form'
-import { zodResolver } from '@hookform/resolvers/zod'
-import { Fragment, useEffect, useState } from 'react'
-import { LoadingButton } from '@mui/lab'
-import Autocomplete from '@mui/material/Autocomplete'
-import Box from '@mui/material/Box'
-import Typography from '@mui/material/Typography'
-import TextField from '@mui/material/TextField'
+import { useEffect, useState } from 'react';
+import { Controller, useForm, SubmitHandler } from 'react-hook-form';
+import { z } from 'zod';
+import Autocomplete from '@mui/material/Autocomplete';
+import Box from '@mui/material/Box';
 import Checkbox from '@mui/material/Checkbox';
 import FormControlLabel from '@mui/material/FormControlLabel';
-import * as Recipe from '../model'
+import LoadingButton from '@mui/lab/LoadingButton';
+import TextField from '@mui/material/TextField';
+import Typography from '@mui/material/Typography';
+import * as Recipe from '../model';
+import { zodResolver } from '@hookform/resolvers/zod';
 
 const RecipeAddForm = () => {
-  const [loading, setLoading] = useState(false)
-  const [name, setName] = useState<String>('');
+  const [loading, setLoading] = useState(false);
+  const [name, setName] = useState<string>('');
 
   const {
-    register,
-    formState: { errors, isSubmitSuccessful },
-    reset,
-    handleSubmit,
     control,
+    formState: { errors, isSubmitSuccessful },
+    handleSubmit,
+    reset,
     setValue,
-    getValues,
   } = useForm<Recipe.INTERFACE>({
     resolver: zodResolver(Recipe.schema),
-  })
+    defaultValues: {
+      id: null,
+      name: '',
+      description: '',
+      isPublic: false,
+      cookingTimeSeconds:0,
+      preparationTimeSeconds:0,
+    },
+  });
 
   useEffect(() => {
     if (isSubmitSuccessful) {
-      reset()
+      reset();
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isSubmitSuccessful])
+  }, [isSubmitSuccessful, reset]);
 
-  const onSubmitHandler: SubmitHandler<Recipe.INTERFACE> = (values) => {
-    console.log(values)
-  }
-  // console.log(errors)
+  const onSubmitHandler: SubmitHandler<Recipe.INTERFACE> = async (values) => {
+    try {
+      setLoading(true);
+      // Make a request to add the recipe using the values
+      console.log(values);
+      setLoading(false);
+    } catch (error) {
+      console.error(error);
+      setLoading(false);
+    }
+  };
 
   return (
-    <Fragment>
+    <>
       <Typography component="h1" variant="h5">
         Add Recipe
       </Typography>
@@ -49,35 +62,49 @@ const RecipeAddForm = () => {
         onSubmit={handleSubmit(onSubmitHandler)}
         sx={{ mt: 1 }}
       >
-        <TextField
-          margin="normal"
-          fullWidth
-          label="Name"
-          placeholder="Name"
-          {...register('name')}
-          error={!!errors['name']}
-          helperText={errors['name'] ? errors['name'].message : ''}
-        />
-
-        <TextField
-          margin="normal"
-          fullWidth
-          multiline
-          rows={4}
-          label="Description"
-          placeholder="Description"
-          {...register('description')}
-          error={!!errors['description']}
-          helperText={errors['description'] ? errors['description'].message : ''}
-        />
-
-        <FormControlLabel
-          label="public"
-          control={
-            <Checkbox
-              {...register('public')} 
+        <Controller
+          name="name"
+          control={control}
+          render={({ field }) => (
+            <TextField
+              {...field}
+              margin="normal"
+              fullWidth
+              label="Name"
+              placeholder="Name"
+              error={!!errors.name}
+              helperText={errors.name ? errors.name.message : ''}
             />
-          }
+          )}
+        />
+
+        <Controller
+          name="description"
+          control={control}
+          render={({ field }) => (
+            <TextField
+              {...field}
+              margin="normal"
+              fullWidth
+              multiline
+              rows={4}
+              label="Description"
+              placeholder="Description"
+              error={!!errors.description}
+              helperText={errors.description ? errors.description.message : ''}
+            />
+          )}
+        />
+
+        <Controller
+          name="isPublic"
+          control={control}
+          render={({ field }) => (
+            <FormControlLabel
+              label="isPublic"
+              control={<Checkbox {...field} />}
+            />
+          )}
         />
 
         <LoadingButton
@@ -90,8 +117,8 @@ const RecipeAddForm = () => {
           Add
         </LoadingButton>
       </Box>
-    </Fragment>
-  )
-}
+    </>
+  );
+};
 
-export default RecipeAddForm
+export default RecipeAddForm;

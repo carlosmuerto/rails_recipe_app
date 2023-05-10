@@ -1,62 +1,42 @@
-import TableCell from '@mui/material/TableCell'
-import Box from '@mui/material/Box'
-import TableRow from '@mui/material/TableRow'
+import { useMemo } from 'react'
 import PropTypes from 'prop-types'
+import Box from '@mui/material/Box'
 import Fab from '@mui/material/Fab'
 import SearchIcon from '@mui/icons-material/Search'
 import EditIcon from '@mui/icons-material/Edit'
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever'
 import * as Recipe from '../../../model'
+import TableCell from '@mui/material/TableCell'
+import CustomTableRow from './CustomTableRow'
+import ActionsCell from './ActionsCell'
 
-const propTypes = {
-  id: PropTypes.string.isRequired,
+type RecipesTableRowProps = {
+  id: string
 }
-type RecipesTableRowProps = PropTypes.InferProps<typeof propTypes>
 
 const RecipesTableRow = ({ id }: RecipesTableRowProps) => {
-  const food = Recipe.MockUp.find((e) => e.id === id)
-  console.log(food)
-  if (food) {
-    const handleShow = () => {
-      console.log(`Show ${food.name}`)
-    }
+  const food = useMemo(() => Recipe.MockUp.find((e) => e.id === id), [id])
 
-    const handleDelete = () => {
-      console.log(`Delete ${food.name}`)
-    }
-
-    const handleEdit = () => {
-      console.log(`edit ${food.name}`)
-    }
-
-    return (
-      <TableRow
-        key={food.id}
-        sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-      >
-        <TableCell component="th" scope="row">
-          {food.name}
-        </TableCell>
-        <TableCell align="right">
-          <Box sx={{ '& > :not(style)': { m: 1 } }}>
-            <Fab color="primary" aria-label="add" onClick={handleShow}>
-              <SearchIcon />
-            </Fab>
-            <Fab color="secondary" aria-label="edit" onClick={handleEdit}>
-              <EditIcon />
-            </Fab>
-            <Fab color="error" aria-label="edit" onClick={handleDelete}>
-              <DeleteForeverIcon />
-            </Fab>
-          </Box>
-        </TableCell>
-      </TableRow>
-    )
-  } else {
-    return <div></div>
+  if (!food) {
+    return null
   }
+
+  return (
+    <CustomTableRow key={food.id}>
+      <TableCell component="th" scope="row">
+        {food.name}
+      </TableCell>
+      <ActionsCell
+        handleShow={() => console.log(`Show ${food.name}`)}
+        handleEdit={() => console.log(`Edit ${food.name}`)}
+        handleDelete={() => console.log(`Delete ${food.name}`)}
+      />
+    </CustomTableRow>
+  )
 }
 
-RecipesTableRow.propTypes = propTypes
+RecipesTableRow.propTypes = {
+  id: PropTypes.string.isRequired,
+}
 
 export default RecipesTableRow
