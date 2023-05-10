@@ -23,9 +23,11 @@ const RecipesList = () => {
           </TableRow>
         </TableHead>
         <TableBody>
-          {recipesList.map((recipe) => (
-            <Row key = {recipe.id} id = {recipe.id}/>
-          ))}
+          {
+            recipesList.map((recipe) => recipe.id ? (
+            <Row key={recipe.id} id={recipe.id} />
+            ) : null)
+          }
         </TableBody>
       </Table>
     </TableContainer>
