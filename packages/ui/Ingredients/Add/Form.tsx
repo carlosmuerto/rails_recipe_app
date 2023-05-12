@@ -40,9 +40,17 @@ const IngredientsAddForm = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isSubmitSuccessful])
 
-  const onSubmitHandler: SubmitHandler<IngredientsAddFormInput> = (values) => {
+  const onSubmit = async (values:IngredientsAddFormInput) => {
+    await new Promise((resolve) => setTimeout(resolve, 2500));
     console.log(values)
   }
+
+  const onSubmitHandler: SubmitHandler<IngredientsAddFormInput> = async (values) => {
+    setLoading(true);
+    await onSubmit(values);
+    setLoading(false);
+  };
+  
   // console.log(errors)
 
   return (
