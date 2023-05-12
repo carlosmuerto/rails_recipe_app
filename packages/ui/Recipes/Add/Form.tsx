@@ -39,11 +39,16 @@ const RecipeAddForm = () => {
     }
   }, [isSubmitSuccessful, reset]);
 
+  const onSubmit = async (values:Recipe.INTERFACE) => {
+    await new Promise((resolve) => setTimeout(resolve, 2500));
+    console.log(values)
+  }
+
   const onSubmitHandler: SubmitHandler<Recipe.INTERFACE> = async (values) => {
     try {
       setLoading(true);
-      // Make a request to add the recipe using the values
-      console.log(values);
+      // Make a request to add the Ingredient using the values
+    await onSubmit(values);
       setLoading(false);
     } catch (error) {
       console.error(error);

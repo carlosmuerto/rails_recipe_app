@@ -46,9 +46,15 @@ const IngredientsAddForm = () => {
   }
 
   const onSubmitHandler: SubmitHandler<IngredientsAddFormInput> = async (values) => {
-    setLoading(true);
+    try {
+      setLoading(true);
+      // Make a request to add the Ingredient using the values
     await onSubmit(values);
-    setLoading(false);
+      setLoading(false);
+    } catch (error) {
+      console.error(error);
+      setLoading(false);
+    }
   };
   
   // console.log(errors)
