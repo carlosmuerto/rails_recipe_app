@@ -91,7 +91,7 @@ const IngredientsAddForm = () => {
           type="text"
           inputMode="numeric"
           error={!!errors['quantity']}
-          helperText={errors['quantity'] ? errors['quantity'].message : ''}
+          helperText={errors.quantity?.message}
           {...register('quantity', {
             valueAsNumber: true,
           })}
