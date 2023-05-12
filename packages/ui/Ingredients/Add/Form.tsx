@@ -40,9 +40,23 @@ const IngredientsAddForm = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isSubmitSuccessful])
 
-  const onSubmitHandler: SubmitHandler<IngredientsAddFormInput> = (values) => {
+  const onSubmit = async (values:IngredientsAddFormInput) => {
+    await new Promise((resolve) => setTimeout(resolve, 2500));
     console.log(values)
   }
+
+  const onSubmitHandler: SubmitHandler<IngredientsAddFormInput> = async (values) => {
+    try {
+      setLoading(true);
+      // Make a request to add the Ingredient using the values
+    await onSubmit(values);
+      setLoading(false);
+    } catch (error) {
+      console.error(error);
+      setLoading(false);
+    }
+  };
+  
   // console.log(errors)
 
   return (
@@ -91,7 +105,7 @@ const IngredientsAddForm = () => {
           type="text"
           inputMode="numeric"
           error={!!errors['quantity']}
-          helperText={errors['quantity'] ? errors['quantity'].message : ''}
+          helperText={errors.quantity?.message}
           {...register('quantity', {
             valueAsNumber: true,
           })}

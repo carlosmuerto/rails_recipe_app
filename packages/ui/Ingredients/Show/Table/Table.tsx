@@ -1,15 +1,23 @@
-import Table from '@mui/material/Table'
-import TableBody from '@mui/material/TableBody'
-import TableCell from '@mui/material/TableCell'
-import TableContainer from '@mui/material/TableContainer'
-import TableHead from '@mui/material/TableHead'
-import TableRow from '@mui/material/TableRow'
-import Paper from '@mui/material/Paper'
+import { useMemo } from 'react';
+import Table from '@mui/material/Table';
+import TableBody from '@mui/material/TableBody';
+import TableCell from '@mui/material/TableCell';
+import TableContainer from '@mui/material/TableContainer';
+import TableHead from '@mui/material/TableHead';
+import TableRow from '@mui/material/TableRow';
+import Paper from '@mui/material/Paper';
 import * as Ingredient from '../../model'
-import { Row } from './Row'
-
+import { Row as IngredientRow } from './Row';
 
 const IngredientsList = () => {
+  // Use useMemo to avoid recalculating the ingredient rows on every render
+  const ingredientRows = useMemo(
+    () =>
+      Ingredient.MockUp.map((ingdnt: Ingredient.TYPE) => (
+        <IngredientRow key = {ingdnt.id} {...ingdnt} />
+      )),
+    []
+  );
 
   return (
     <TableContainer component={Paper}>
@@ -22,14 +30,10 @@ const IngredientsList = () => {
             <TableCell align="right">Actions</TableCell>
           </TableRow>
         </TableHead>
-        <TableBody>
-          {Ingredient.MockUp.map((food) => (
-            <Row key = {food.id} id = {food.id}/>
-          ))}
-        </TableBody>
+        <TableBody>{ingredientRows}</TableBody>
       </Table>
     </TableContainer>
-  )
-}
+  );
+};
 
-export default IngredientsList
+export default IngredientsList;
