@@ -17,9 +17,9 @@ const create = (
   }
 }
 
-const parsePricePerUnit = (food: Ingredient) =>
-  `${food.price_per_unit}\$ per ${food.unit}`
+const parsePricePerUnit = (price_per_unit: number, unit: IngredientUnit) =>
+  `${price_per_unit}\$ per ${unit}`
 
-const parseQuantityUnit = (food: Ingredient) => `${food.quantity} ${food.unit}`
+const parseQuantityUnit = (quantity: number, unit:IngredientUnit) => `${quantity} ${unit}`
 
 export { create, parsePricePerUnit, parseQuantityUnit }
