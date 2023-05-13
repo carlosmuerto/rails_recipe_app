@@ -12,18 +12,8 @@ import Button from '@mui/material/Button'
 import Tooltip from '@mui/material/Tooltip'
 import MenuItem from '@mui/material/MenuItem'
 import MenuBookIcon from '@mui/icons-material/MenuBook';
-import Link from 'next/link'
 
-interface HeaderPage {
-  title: string;
-  href: string;
-}
-
-const pages: HeaderPage[] = [
-  { title: 'My Ingredients', href: "/Ingredients" },
-  { title: 'My Recipes', href: "/Recipes" },
-  { title: 'Public Recipes', href: "/Ingredients" },
-]
+const pages = ['My Ingredients', 'My Recipes', 'Public Recipes']
 const settings = ['Profile', 'Logout']
 
 const BaseAppBar = () => {
@@ -53,7 +43,7 @@ const BaseAppBar = () => {
           <Typography
             variant="h6"
             noWrap
-            component={Link}
+            component="a"
             href="/"
             sx={{
               mr: 2,
@@ -98,17 +88,8 @@ const BaseAppBar = () => {
               }}
             >
               {pages.map((page) => (
-                <MenuItem key={page.title} onClick={handleCloseNavMenu}>
-                  <Typography
-                    component={Link}
-                    href={page.href}
-                    textAlign="center"
-                    sx={{
-                      textDecoration: 'none',
-                    }}
-                  >
-                    {page.title}
-                  </Typography>
+                <MenuItem key={page} onClick={handleCloseNavMenu}>
+                  <Typography textAlign="center">{page}</Typography>
                 </MenuItem>
               ))}
             </Menu>
@@ -117,8 +98,8 @@ const BaseAppBar = () => {
           <Typography
             variant="h5"
             noWrap
-            component={Link}
-            href="/"
+            component="a"
+            href=""
             sx={{
               mr: 2,
               display: { xs: 'flex', md: 'none' },
@@ -134,27 +115,13 @@ const BaseAppBar = () => {
           </Typography>
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
             {pages.map((page) => (
-
-              <Typography
-                key={page.title}
-                component={Link}
-                href={page.href}
-                sx={{
-                  mr: 2,
-                  color: 'white', 
-                  display: 'block',
-                  textDecoration: "none"
-                }}
+              <Button
+                key={page}
+                onClick={handleCloseNavMenu}
+                sx={{ my: 2, color: 'white', display: 'block' }}
               >
-                {page.title}
-              </Typography>
-              // <Button
-              //   key={page.title}
-              //   onClick={handleCloseNavMenu}
-              //   sx={{ my: 2, color: 'white', display: 'block' }}
-              // >
-              //   {page.title}
-              // </Button>
+                {page}
+              </Button>
             ))}
           </Box>
 
@@ -182,11 +149,7 @@ const BaseAppBar = () => {
             >
               {settings.map((setting) => (
                 <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                  <Typography
-                    textAlign="center"
-                  >
-                    {setting}
-                  </Typography>
+                  <Typography textAlign="center">{setting}</Typography>
                 </MenuItem>
               ))}
             </Menu>
