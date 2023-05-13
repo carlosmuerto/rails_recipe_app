@@ -7,12 +7,13 @@ import SearchIcon from '@mui/icons-material/Search'
 import EditIcon from '@mui/icons-material/Edit'
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever'
 import * as Ingredient from '../../../model'
+import { useRouter } from 'next/navigation'
 
 const IngredientsTableRow = ({ id, name, unit, price_per_unit, quantity }: Ingredient.TYPE) => {
-
+  const router = useRouter();
   
   const handleShow = () => {
-    console.log(`Show ${name}`)
+    router.push(`Ingredients/${id.toString()}`)
   }
 
   const handleDelete = () => {

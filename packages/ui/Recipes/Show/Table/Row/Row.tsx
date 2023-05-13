@@ -9,6 +9,7 @@ import * as Recipe from '../../../model'
 import TableCell from '@mui/material/TableCell'
 import CustomTableRow from './CustomTableRow'
 import ActionsCell from './ActionsCell'
+import { useRouter } from 'next/navigation'
 
 type RecipesTableRowProps = {
   id: string
@@ -16,9 +17,22 @@ type RecipesTableRowProps = {
 
 const RecipesTableRow = ({ id }: RecipesTableRowProps) => {
   const food = useMemo(() => Recipe.MockUp.find((e) => e.id === id), [id])
+  const router = useRouter();
 
   if (!food) {
     return null
+  }
+
+  const handleShow = () => {
+    router.push(`Recipes/${id.toString()}`)
+  }
+
+  const handleDelete = () => {
+    console.log(`Delete ${food.name}`)
+  }
+
+  const handleEdit = () => {
+    console.log(`edit ${food.name}`)
   }
 
   return (
@@ -27,9 +41,9 @@ const RecipesTableRow = ({ id }: RecipesTableRowProps) => {
         {food.name}
       </TableCell>
       <ActionsCell
-        handleShow={() => console.log(`Show ${food.name}`)}
-        handleEdit={() => console.log(`Edit ${food.name}`)}
-        handleDelete={() => console.log(`Delete ${food.name}`)}
+        handleShow={handleShow}
+        handleEdit={handleEdit}
+        handleDelete={handleDelete}
       />
     </CustomTableRow>
   )
