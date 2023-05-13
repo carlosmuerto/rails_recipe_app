@@ -13,6 +13,7 @@ import Tooltip from '@mui/material/Tooltip'
 import MenuItem from '@mui/material/MenuItem'
 import MenuBookIcon from '@mui/icons-material/MenuBook';
 import Link from 'next/link'
+import { useRouter } from 'next/navigation'
 
 interface HeaderPage {
   title: string;
@@ -29,6 +30,7 @@ const settings = ['Profile', 'Logout']
 const BaseAppBar = () => {
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null)
   const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null)
+  const router = useRouter();
 
   const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorElNav(event.currentTarget)
@@ -134,27 +136,16 @@ const BaseAppBar = () => {
           </Typography>
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
             {pages.map((page) => (
-
-              <Typography
+              <Button
                 key={page.title}
-                component={Link}
-                href={page.href}
-                sx={{
-                  mr: 2,
-                  color: 'white', 
-                  display: 'block',
-                  textDecoration: "none"
+                onClick={() => {
+                  handleCloseNavMenu()
+                  router.replace(page.href)
                 }}
+                sx={{ my: 2, color: 'white', display: 'block' }}
               >
                 {page.title}
-              </Typography>
-              // <Button
-              //   key={page.title}
-              //   onClick={handleCloseNavMenu}
-              //   sx={{ my: 2, color: 'white', display: 'block' }}
-              // >
-              //   {page.title}
-              // </Button>
+              </Button>
             ))}
           </Box>
 
