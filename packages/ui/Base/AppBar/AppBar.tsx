@@ -21,9 +21,9 @@ interface HeaderPage {
 }
 
 const pages: HeaderPage[] = [
-  { title: 'My Ingredients', href: "/Ingredients" },
-  { title: 'My Recipes', href: "/Recipes" },
-  { title: 'Public Recipes', href: "/Ingredients" },
+  { title: 'My Ingredients', href: "/ingredients" },
+  { title: 'My Recipes', href: "/recipes" },
+  { title: 'Public Recipes', href: "/ingredients" },
 ]
 const settings = ['Profile', 'Logout']
 
