@@ -31,6 +31,7 @@ const AuthLogInForm = () => {
     register,
     formState: { errors, isSubmitSuccessful },
     reset,
+    setError,
     handleSubmit,
   } = useForm<AuthLogInFormInput>({
     resolver: zodResolver(AuthLogInFormSchema),
@@ -61,6 +62,11 @@ const AuthLogInForm = () => {
           console.log(error.response.data)
           console.log(error.response.status)
           console.log(error.response.headers)
+          
+          if (error.response.status === 401) {
+            setError('email', { type: 'manual', message: 'Invalid email' });
+            setError('password', { type: 'manual', message: 'Invalid Password' });
+          }
         } else if (error.request) {
           // The request was made but no response was received
           // `error.request` is an instance of XMLHttpRequest in the browser and an instance of

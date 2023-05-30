@@ -13,6 +13,8 @@ import Button from '@mui/material/Button'
 import FormControlLabel from '@mui/material/FormControlLabel'
 import FormGroup from '@mui/material/FormGroup'
 import FormHelperText from '@mui/material/FormHelperText'
+import axios from 'axios'
+import { BASE_URL } from '../const'
 
 const AuthSignInFromSchema = object({
   name: string()
@@ -40,6 +42,7 @@ const AuthSignInFrom = () => {
   const {
     register,
     formState: { errors, isSubmitSuccessful },
+    setError,
     reset,
     handleSubmit,
   } = useForm<AuthSignInFromInput>({
@@ -53,10 +56,42 @@ const AuthSignInFrom = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isSubmitSuccessful])
 
-  const onSubmitHandler: SubmitHandler<AuthSignInFromInput> = (values) => {
-    console.log(values)
+  const onSubmitHandler: SubmitHandler<AuthSignInFromInput> = async (values) => {
+    axios
+      .post(`${BASE_URL}/signup`, {
+        user: {
+          name: values.name,
+          email: values.email,
+          password: values.password,
+        },
+      })
+      .then(function (response) {
+        console.log(response)
+      })
+      .catch(function (error) {
+        if (error.response) {
+          // The request was made and the server responded with a status code
+          // that falls out of the range of 2xx
+          console.log(error.response.data)
+          console.log(error.response.status)
+          console.log(error.response.headers)
+          setError('root', { type: 'manual', message: error.response.data.status.message });
+          
+        } else if (error.request) {
+          // The request was made but no response was received
+          // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
+          // http.ClientRequest in node.js
+          console.log(error.request)
+        } else {
+          // Something happened in setting up the request that triggered an Error
+          console.log('Error', error.message)
+        }
+        console.log(error.config)
+      })
+      .finally(function () {
+        setLoading(false)
+      })
   }
-  console.log(errors)
 
   return (
     <Fragment>
@@ -133,6 +168,7 @@ const AuthSignInFrom = () => {
           />
           <FormHelperText error={!!errors['terms']}>
             {errors['terms'] ? errors['terms'].message : ''}
+            {errors['root'] ? errors['root'].message : ''}
           </FormHelperText>
         </FormGroup>
 
