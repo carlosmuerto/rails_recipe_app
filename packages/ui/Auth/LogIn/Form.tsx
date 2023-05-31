@@ -13,6 +13,11 @@ import Button from '@mui/material/Button'
 import FormControlLabel from '@mui/material/FormControlLabel'
 import axios from 'axios'
 import { BASE_URL } from '../const'
+import { useSelector, useDispatch } from 'react-redux'
+import type { AppDispatch, RootState } from '../../Redux/store'
+import * as AuthSlice from '../../Redux/Auth/AuthSlice'
+import loadingStatus from '../../Redux/reduxConst'
+import { FormHelperText } from '@mui/material'
 
 const AuthLogInFormSchema = object({
   email: string().nonempty('Email is required').email('Email is invalid'),
@@ -25,7 +30,8 @@ const AuthLogInFormSchema = object({
 type AuthLogInFormInput = TypeOf<typeof AuthLogInFormSchema>
 
 const AuthLogInForm = () => {
-  const [loading, setLoading] = useState(false)
+  const AuthState = useSelector((state: RootState) => state.Auth)
+  const dispatch = useDispatch<AppDispatch>();
 
   const {
     register,
@@ -45,42 +51,7 @@ const AuthLogInForm = () => {
   }, [isSubmitSuccessful])
 
   const onSubmitHandler: SubmitHandler<AuthLogInFormInput> = async (values) => {
-    axios
-      .post(`${BASE_URL}/login`, {
-        user: {
-          email: values.email,
-          password: values.password,
-        },
-      })
-      .then(function (response) {
-        console.log(response)
-      })
-      .catch(function (error) {
-        if (error.response) {
-          // The request was made and the server responded with a status code
-          // that falls out of the range of 2xx
-          console.log(error.response.data)
-          console.log(error.response.status)
-          console.log(error.response.headers)
-          
-          if (error.response.status === 401) {
-            setError('email', { type: 'manual', message: 'Invalid email' });
-            setError('password', { type: 'manual', message: 'Invalid Password' });
-          }
-        } else if (error.request) {
-          // The request was made but no response was received
-          // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
-          // http.ClientRequest in node.js
-          console.log(error.request)
-        } else {
-          // Something happened in setting up the request that triggered an Error
-          console.log('Error', error.message)
-        }
-        console.log(error.config)
-      })
-      .finally(function () {
-        setLoading(false)
-      })
+    dispatch(AuthSlice.logIn({ email: values.email, password: values.password }));
   }
 
   return (
@@ -88,6 +59,7 @@ const AuthLogInForm = () => {
       <Typography component="h1" variant="h5">
         Sign in
       </Typography>
+      <Typography>{AuthState.user.userName}</Typography>
       <Box
         component="form"
         noValidate
@@ -120,11 +92,15 @@ const AuthLogInForm = () => {
           {...register('password')}
         />
 
+        <FormHelperText error={!!AuthState.alert.red}>
+          {AuthState.alert.red ? AuthState.alert.red : ''}
+        </FormHelperText>
+
         <LoadingButton
           variant="contained"
           fullWidth
           type="submit"
-          loading={loading}
+          loading={AuthState.loading === loadingStatus.pending}
           sx={{ mt: 3, mb: 2 }}
         >
           Sign In
