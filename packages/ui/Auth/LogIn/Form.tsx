@@ -11,6 +11,13 @@ import Typography from '@mui/material/Typography'
 import TextField from '@mui/material/TextField'
 import Button from '@mui/material/Button'
 import FormControlLabel from '@mui/material/FormControlLabel'
+import axios from 'axios'
+import { BASE_URL } from '../const'
+import { useSelector, useDispatch } from 'react-redux'
+import type { AppDispatch, RootState } from '../../Redux/store'
+import * as AuthSlice from '../../Redux/Auth/AuthSlice'
+import loadingStatus from '../../Redux/reduxConst'
+import { FormHelperText } from '@mui/material'
 
 const AuthLogInFormSchema = object({
   email: string().nonempty('Email is required').email('Email is invalid'),
@@ -23,12 +30,14 @@ const AuthLogInFormSchema = object({
 type AuthLogInFormInput = TypeOf<typeof AuthLogInFormSchema>
 
 const AuthLogInForm = () => {
-  const [loading, setLoading] = useState(false)
+  const AuthState = useSelector((state: RootState) => state.Auth)
+  const dispatch = useDispatch<AppDispatch>();
 
   const {
     register,
     formState: { errors, isSubmitSuccessful },
     reset,
+    setError,
     handleSubmit,
   } = useForm<AuthLogInFormInput>({
     resolver: zodResolver(AuthLogInFormSchema),
@@ -41,16 +50,16 @@ const AuthLogInForm = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isSubmitSuccessful])
 
-  const onSubmitHandler: SubmitHandler<AuthLogInFormInput> = (values) => {
-    console.log(values)
+  const onSubmitHandler: SubmitHandler<AuthLogInFormInput> = async (values) => {
+    dispatch(AuthSlice.logIn({ email: values.email, password: values.password }));
   }
-  // console.log(errors)
 
   return (
     <Fragment>
       <Typography component="h1" variant="h5">
         Sign in
       </Typography>
+      <Typography>{AuthState.user.userName}</Typography>
       <Box
         component="form"
         noValidate
@@ -83,11 +92,15 @@ const AuthLogInForm = () => {
           {...register('password')}
         />
 
+        <FormHelperText error={!!AuthState.alert.red}>
+          {AuthState.alert.red ? AuthState.alert.red : ''}
+        </FormHelperText>
+
         <LoadingButton
           variant="contained"
           fullWidth
           type="submit"
-          loading={loading}
+          loading={AuthState.loading === loadingStatus.pending}
           sx={{ mt: 3, mb: 2 }}
         >
           Sign In

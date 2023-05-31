@@ -13,6 +13,12 @@ import Button from '@mui/material/Button'
 import FormControlLabel from '@mui/material/FormControlLabel'
 import FormGroup from '@mui/material/FormGroup'
 import FormHelperText from '@mui/material/FormHelperText'
+import axios from 'axios'
+import { BASE_URL } from '../const'
+import { AppDispatch, RootState } from '../../Redux/store'
+import { useDispatch, useSelector } from 'react-redux'
+import * as AuthSlice from '../../Redux/Auth/AuthSlice'
+import loadingStatus from '../../Redux/reduxConst'
 
 const AuthSignInFromSchema = object({
   name: string()
@@ -35,11 +41,13 @@ const AuthSignInFromSchema = object({
 type AuthSignInFromInput = TypeOf<typeof AuthSignInFromSchema>
 
 const AuthSignInFrom = () => {
-  const [loading, setLoading] = useState(false)
+  const AuthState = useSelector((state: RootState) => state.Auth)
+  const dispatch = useDispatch<AppDispatch>()
 
   const {
     register,
     formState: { errors, isSubmitSuccessful },
+    setError,
     reset,
     handleSubmit,
   } = useForm<AuthSignInFromInput>({
@@ -53,10 +61,17 @@ const AuthSignInFrom = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isSubmitSuccessful])
 
-  const onSubmitHandler: SubmitHandler<AuthSignInFromInput> = (values) => {
-    console.log(values)
+  const onSubmitHandler: SubmitHandler<AuthSignInFromInput> = async (
+    values,
+  ) => {
+    dispatch(
+      AuthSlice.signUp({
+        name: values.name,
+        email: values.email,
+        password: values.password,
+      }),
+    )
   }
-  console.log(errors)
 
   return (
     <Fragment>
@@ -117,7 +132,9 @@ const AuthSignInFrom = () => {
           autoComplete="new-password"
           required
           error={!!errors['passwordConfirm']}
-          helperText={errors['passwordConfirm'] ? errors['passwordConfirm'].message : ''}
+          helperText={
+            errors['passwordConfirm'] ? errors['passwordConfirm'].message : ''
+          }
           {...register('passwordConfirm')}
         />
 
@@ -133,6 +150,7 @@ const AuthSignInFrom = () => {
           />
           <FormHelperText error={!!errors['terms']}>
             {errors['terms'] ? errors['terms'].message : ''}
+            {AuthState.alert.red ? AuthState.alert.red : ''}
           </FormHelperText>
         </FormGroup>
 
@@ -140,17 +158,16 @@ const AuthSignInFrom = () => {
           variant="contained"
           fullWidth
           type="submit"
-          loading={loading}
+          loading={AuthState.loading === loadingStatus.pending}
           sx={{ mt: 3, mb: 2 }}
         >
           SIGN UP
         </LoadingButton>
         <Grid container>
-          <Grid item xs>
-          </Grid>
+          <Grid item xs></Grid>
           <Grid item>
             <Link href="#" variant="body2">
-              {"Already have an account? Sign in"}
+              {'Already have an account? Sign in'}
             </Link>
           </Grid>
         </Grid>
