@@ -3,6 +3,7 @@ import { literal, object, string, TypeOf } from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Fragment, useEffect, useState } from 'react'
 import { LoadingButton } from '@mui/lab'
+import { useRouter } from 'next/navigation'
 import Checkbox from '@mui/material/Checkbox'
 import Link from '@mui/material/Link'
 import Grid from '@mui/material/Grid'
@@ -19,6 +20,7 @@ import { AppDispatch, RootState } from '../../Redux/store'
 import { useDispatch, useSelector } from 'react-redux'
 import * as AuthSlice from '../../Redux/Auth/AuthSlice'
 import loadingStatus from '../../Redux/reduxConst'
+import { parseCookies, setCookie } from 'nookies'
 
 const AuthSignInFromSchema = object({
   name: string()
@@ -43,6 +45,7 @@ type AuthSignInFromInput = TypeOf<typeof AuthSignInFromSchema>
 const AuthSignInFrom = () => {
   const AuthState = useSelector((state: RootState) => state.Auth)
   const dispatch = useDispatch<AppDispatch>()
+  const router = useRouter()
 
   const {
     register,
@@ -60,6 +63,30 @@ const AuthSignInFrom = () => {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isSubmitSuccessful])
+
+  useEffect(() => {
+    switch (AuthState.loading) {
+      case loadingStatus.idle:
+        // console.log(parseCookies())
+        break
+      case loadingStatus.succeeded:
+        // set the cookie with the token
+        if (typeof window !== 'undefined' && AuthState.user) {
+          setCookie(null, 'Authorization', AuthState.user.token.split(' ')[1], {
+            path: '/',
+            domain: window.location.hostname,
+            secure: true,
+            sameSite: 'strict',
+          })
+          router.replace('/recipes')
+        }
+
+        // console.log(parseCookies())
+
+        break
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [AuthState.loading])
 
   const onSubmitHandler: SubmitHandler<AuthSignInFromInput> = async (
     values,

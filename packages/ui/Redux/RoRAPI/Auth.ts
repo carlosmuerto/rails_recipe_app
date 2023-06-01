@@ -20,17 +20,19 @@ interface SignupArgs {
   password: string;
 }
 
-interface AuthResponse {
+interface UserInfo {
+  id: string;
+  name: string;
+  email: string;
   token: string;
+}
+
+interface AuthResponse {
   status: {
     code: number,
     message: string,
   };
-  user: {
-    id: string;
-    name: string;
-    email: string;
-  };
+  user: UserInfo;
 }
 
 const login = async ({email, password}:LoginArgs):Promise<AuthResponse> => {
@@ -42,10 +44,12 @@ const login = async ({email, password}:LoginArgs):Promise<AuthResponse> => {
   }, options);
 
   const authResponse:AuthResponse = {
-    token: res.headers.authorization,
     status: res.data.status,
     user: res.data.data
   }
+
+  authResponse.user.token = res.headers.authorization
+
   return authResponse;
 };
 
@@ -59,14 +63,17 @@ const signup = async ({name, email, password}:SignupArgs):Promise<AuthResponse> 
   }, options);
 
   const authResponse:AuthResponse = {
-    token: res.headers.authorization,
     status: res.data.status,
     user: res.data.data
   }
+
+  authResponse.user.token = res.headers.authorization
+
   return authResponse;
 };
 
-const logout = async (authorization:string) => {
+const logout = async (token:string) => {
+  const authorization = `Bearer ${token}`;
   const logoutOptions = {
     headers: {
       ...options.headers,
@@ -86,4 +93,4 @@ const AuthAPI = {
 };
 
 export default AuthAPI;
-export type { LoginArgs, SignupArgs, AuthResponse }
+export type { LoginArgs, SignupArgs, AuthResponse, UserInfo }

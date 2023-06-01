@@ -23,8 +23,8 @@
   "dependencies": {
     "@reduxjs/toolkit": "^1.9.5",
     "axios": "^1.4.0",
-    "react-redux": "^8.0.5",
-    "ui": "^0.2.4"
+    "nookies": "^2.5.2",
+    "react-redux": "^8.0.5"
   },
   "packageManager": "yarn@1.22.19"
 }
