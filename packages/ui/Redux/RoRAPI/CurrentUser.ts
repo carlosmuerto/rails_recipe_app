@@ -1,7 +1,8 @@
 import axios from 'axios';
 import BASEURL from './URL_API';
+import { AuthResponse } from './Auth';
 
-const DIRECTION = 'users/current';
+const DIRECTION = 'current_user';
 
 const options = {
   headers: {
@@ -10,8 +11,8 @@ const options = {
   },
 };
 
-const currentUser = async (token: string) => {
-  const authorization = token;
+const currentUser = async (token: string):Promise<AuthResponse> => {
+  const authorization = `Bearer ${token}`;
 
   const CurrentUserOptions = {
     headers: {
@@ -19,11 +20,19 @@ const currentUser = async (token: string) => {
       authorization,
     },
   };
-  const answer = await axios.get(BASEURL + DIRECTION, CurrentUserOptions);
-  const user = answer.data;
+  const res = await axios.get(BASEURL + DIRECTION, CurrentUserOptions);
 
-  user.token = authorization;
-  return user;
+  console.log(res.data);
+  
+
+  const authResponse:AuthResponse = {
+    status: res.data.status,
+    user: res.data.data
+  }
+
+  authResponse.user.token = token
+
+  return authResponse;
 };
 
 const CheckUser = {

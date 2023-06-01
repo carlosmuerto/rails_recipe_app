@@ -1,21 +1,27 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit'
 import AuthAPI from '../RoRAPI/Auth';
-import { LoginArgs, SignupArgs, AuthResponse } from '../RoRAPI/Auth';
+import { LoginArgs, SignupArgs, AuthResponse, UserInfo } from '../RoRAPI/Auth';
 import loadingStatus from '../reduxConst';
 import CheckUser from '../RoRAPI/CurrentUser';
 
 // actions CONSTANTS
 const ACTION_PREPEND = 'API/Auth';
 
+// AUTH state interface
+interface AUTHSTATE {
+  loading: loadingStatus;
+  user: UserInfo | undefined;
+  alert: {
+    green: string[];
+    red: string[];
+  };
+}
+
 // AUTH Init State
-const initialState = {
+const initialState:AUTHSTATE = {
   loading: loadingStatus.idle,
-  user: {
-    userName: '',
-    eMail: '',
-    token: '',
-  },
+  user: undefined,
   alert: { green: Array<string>(), red: Array<string>() },
 };
 
@@ -54,21 +60,9 @@ const AuthSlice = createSlice({
         state.alert.green = ['Login Successfully'];
         state.alert.red = [];
 
-        console.log(action)
-
-        const {
-          email, name,
-        } = action.payload.user;
-
-        const userData = {
-          userName: name,
-          eMail: email,
-          token: action.payload.token,
-        };
-
-        state.user = userData;
+        state.user = action.payload.user;
       })
-      .addCase(logIn.rejected, (state) => {
+      .addCase(logIn.rejected, (state, action) => {
         state.loading = loadingStatus.failed;
         state.alert.green = [];
         state.alert.red = ['Wrong email or password'];
@@ -77,11 +71,12 @@ const AuthSlice = createSlice({
       .addCase(signUp.pending, (state) => {
         state.loading = loadingStatus.pending;
       })
-      .addCase(signUp.fulfilled, (state) => {
-        state.loading = loadingStatus.idle;
-        state.user = initialState.user;
+      .addCase(signUp.fulfilled, (state, action) => {
+        state.loading = loadingStatus.succeeded;
         state.alert.green = ['User created Successfully'];
         state.alert.red = [];
+
+        state.user = action.payload.user;
       })
       .addCase(signUp.rejected, (state) => {
         state.loading = loadingStatus.failed;
@@ -92,7 +87,7 @@ const AuthSlice = createSlice({
       .addCase(logOut.pending, () => { })
       .addCase(logOut.fulfilled, (state) => {
         state.loading = loadingStatus.idle;
-        state.user = initialState.user;
+        state.user = undefined;
         state.alert.green = [];
         state.alert.red = [];
       })
@@ -104,18 +99,10 @@ const AuthSlice = createSlice({
       .addCase(load.fulfilled, (state, action) => {
         state.loading = loadingStatus.succeeded;
 
-        const {
-          email, name, role,
-        } = action.payload;
+        console.log(action);
+        
 
-        const userData = {
-          userName: name,
-          eMail: email,
-          token: action.payload.token,
-          role,
-        };
-
-        state.user = userData;
+        state.user = action.payload.user;
       })
       .addCase(load.rejected, (state) => {
         state.loading = loadingStatus.failed;
