@@ -8,10 +8,11 @@ import Paper from '@mui/material/Paper'
 import * as Recipe from '../../model'
 import { Row } from './Row'
 
+interface Props {
+  recipesList: Recipe.INTERFACE[];
+}
 
-const RecipesList = () => {
-
-  const recipesList = Recipe.MockUp;
+const RecipesList = ({ recipesList }: Props) => {
 
   return (
     <TableContainer component={Paper}>
