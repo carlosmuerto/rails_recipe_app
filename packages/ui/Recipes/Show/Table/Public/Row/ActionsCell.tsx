@@ -8,25 +8,13 @@ import TableCell from '@mui/material/TableCell'
 
 type ActionsCellProps = {
   handleShow: () => void
-  handleEdit: () => void
-  handleDelete: () => void
 }
 
-const ActionsCell: FC<ActionsCellProps> = ({
-  handleShow,
-  handleEdit,
-  handleDelete,
-}) => (
+const ActionsCell: FC<ActionsCellProps> = ({ handleShow }) => (
   <TableCell align="right">
     <Box sx={{ '& > :not(style)': { m: 1 } }}>
       <Fab color="primary" aria-label="add" onClick={handleShow}>
         <SearchIcon />
-      </Fab>
-      <Fab color="secondary" aria-label="edit" onClick={handleEdit}>
-        <EditIcon />
-      </Fab>
-      <Fab color="error" aria-label="edit" onClick={handleDelete}>
-        <DeleteForeverIcon />
       </Fab>
     </Box>
   </TableCell>

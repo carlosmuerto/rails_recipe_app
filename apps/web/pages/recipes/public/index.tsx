@@ -5,7 +5,7 @@ import * as Recipes from 'ui/Recipes';
 const IndexRecipes = () => {
   return (
     <Layout>
-      <Recipes.Show.Table />
+      <Recipes.Show.Public />
     </Layout>
   );
 }
