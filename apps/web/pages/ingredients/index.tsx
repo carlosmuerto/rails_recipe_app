@@ -5,7 +5,7 @@ import * as Ingredients from 'ui/Ingredients';
 const IndexIngredients = () => {
   return (
     <Layout>
-      <Ingredients.Show.Table />
+      <Ingredients.Show.Table ingredients={Ingredients.model.MockUp} />
     </Layout>
   );
 }

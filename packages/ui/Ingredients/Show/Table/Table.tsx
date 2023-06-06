@@ -9,14 +9,18 @@ import Paper from '@mui/material/Paper';
 import * as Ingredient from '../../model'
 import { Row as IngredientRow } from './Row';
 
-const IngredientsList = () => {
+interface Props {
+  ingredients: Ingredient.TYPE[];
+}
+
+const IngredientsList = ({ ingredients }: Props) => {
   // Use useMemo to avoid recalculating the ingredient rows on every render
   const ingredientRows = useMemo(
     () =>
-      Ingredient.MockUp.map((ingdnt: Ingredient.TYPE) => (
+      ingredients.map((ingdnt: Ingredient.TYPE) => (
         <IngredientRow key = {ingdnt.id} {...ingdnt} />
       )),
-    []
+    [ingredients]
   );
 
   return (

@@ -99,9 +99,6 @@ const AuthSlice = createSlice({
       .addCase(load.fulfilled, (state, action) => {
         state.loading = loadingStatus.succeeded;
 
-        console.log(action);
-        
-
         state.user = action.payload.user;
       })
       .addCase(load.rejected, (state) => {
@@ -118,6 +115,7 @@ export {
   signUp,
   logOut,
   load,
+  type AUTHSTATE
 };
 
 export default reducer;

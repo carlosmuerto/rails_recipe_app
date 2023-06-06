@@ -5,29 +5,29 @@ import TableContainer from '@mui/material/TableContainer'
 import TableHead from '@mui/material/TableHead'
 import TableRow from '@mui/material/TableRow'
 import Paper from '@mui/material/Paper'
-import * as Recipe from '../../model'
+import * as Recipe from '../../../model'
 import { RecipesTableRow } from './Row'
 import { useDispatch, useSelector } from 'react-redux'
-import { AppDispatch, RootState } from '../../../Redux/store'
-import * as RecipesSlice from '../../../Redux/Recipes/RecipesSlice'
+import { AppDispatch, RootState } from '../../../../Redux/store'
+import * as RecipesPublicSlice from '../../../../Redux/Recipes/Public/RecipesPublicSlice'
 import React, { useEffect } from 'react'
-import loadingStatus from '../../../Redux/reduxConst'
+import loadingStatus from '../../../../Redux/reduxConst'
 import { boolean } from 'zod'
 
-const RecipesList = () => {
-  const RecipesState = useSelector((state: RootState) => state.Recipes)
+const RecipesPublicList = () => {
+  const RecipesPublicState = useSelector((state: RootState) => state.RecipesPublic)
   const AuthState = useSelector((state: RootState) => state.Auth)
   const dispatch = useDispatch<AppDispatch>()
 
   useEffect(() => {
     if (AuthState.loading === loadingStatus.succeeded && AuthState.user)
-    switch (RecipesState.loading) {
+    switch (RecipesPublicState.loading) {
       case loadingStatus.idle:
-        dispatch(RecipesSlice.fetch(AuthState.user.token))
+        dispatch(RecipesPublicSlice.fetch(AuthState.user.token))
         break
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [AuthState.loading, RecipesState.loading, RecipesState.list])
+  }, [AuthState.loading, RecipesPublicState.loading, RecipesPublicState.list])
 
   return (
     <TableContainer component={Paper}>
@@ -40,7 +40,7 @@ const RecipesList = () => {
         </TableHead>
         <TableBody>
           {
-            RecipesState.list.map((recipe) => {
+            RecipesPublicState.list.map((recipe) => {
               return (
                 <RecipesTableRow key={recipe.id} recipe={recipe}/>
               )
@@ -52,4 +52,4 @@ const RecipesList = () => {
   )
 }
 
-export default RecipesList
+export default RecipesPublicList

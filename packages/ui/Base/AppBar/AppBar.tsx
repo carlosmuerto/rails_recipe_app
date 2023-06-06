@@ -28,7 +28,7 @@ interface HeaderPage {
 const pages: HeaderPage[] = [
   { title: 'My Ingredients', href: '/ingredients' },
   { title: 'My Recipes', href: '/recipes' },
-  { title: 'Public Recipes', href: '/ingredients' },
+  { title: 'Public Recipes', href: '/recipes/public' },
 ]
 
 const BaseAppBar = () => {

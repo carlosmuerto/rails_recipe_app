@@ -22,9 +22,6 @@ const currentUser = async (token: string):Promise<AuthResponse> => {
   };
   const res = await axios.get(BASEURL + DIRECTION, CurrentUserOptions);
 
-  console.log(res.data);
-  
-
   const authResponse:AuthResponse = {
     status: res.data.status,
     user: res.data.data

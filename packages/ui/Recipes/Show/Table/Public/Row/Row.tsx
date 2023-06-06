@@ -5,7 +5,7 @@ import Fab from '@mui/material/Fab'
 import SearchIcon from '@mui/icons-material/Search'
 import EditIcon from '@mui/icons-material/Edit'
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever'
-import * as Recipe from '../../../model'
+import * as Recipe from '../../../../model'
 import TableCell from '@mui/material/TableCell'
 import CustomTableRow from './CustomTableRow'
 import ActionsCell from './ActionsCell'
@@ -22,14 +22,6 @@ const RecipesTableRow = ({ recipe }: RecipesTableRowProps) => {
     router.push(`recipes/${recipe.id.toString()}`)
   }
 
-  const handleDelete = () => {
-    console.log(`Delete ${recipe.name}`)
-  }
-
-  const handleEdit = () => {
-    console.log(`edit ${recipe.name}`)
-  }
-
   return (
     <CustomTableRow key={recipe.id}>
       <TableCell component="th" scope="row">
@@ -37,8 +29,6 @@ const RecipesTableRow = ({ recipe }: RecipesTableRowProps) => {
       </TableCell>
       <ActionsCell
         handleShow={handleShow}
-        handleEdit={handleEdit}
-        handleDelete={handleDelete}
       />
     </CustomTableRow>
   )

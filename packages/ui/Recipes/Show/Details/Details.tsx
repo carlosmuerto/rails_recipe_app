@@ -1,6 +1,10 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Card, CardHeader, CardContent, Typography } from '@mui/material';
 import * as Recipe from '../../model'
+import { useDispatch, useSelector } from 'react-redux';
+import { AppDispatch, RootState } from '../../../Redux/store';
+import * as RecipesSlice from '../../../Redux/Recipes/RecipesSlice'
+import loadingStatus from '../../../Redux/reduxConst';
 
 interface RecipeHeaderProps {
   name: string;
@@ -38,20 +42,37 @@ const RecipeContent: React.FC<RecipeContentProps> = ({
   );
 };
 
-const RecipeDetails: React.FC<Recipe.INTERFACE> = ({
-  name,
-  description,
-  isPublic,
-  preparationTimeSeconds,
-  cookingTimeSeconds,
-}) => {
+interface RecipeDetailsProp {
+  id: string | undefined
+}
+
+
+const RecipeDetails: React.FC<RecipeDetailsProp> = ({id}) => {
+  const RecipesState = useSelector((state: RootState) => state.Recipes)
+  const AuthState = useSelector((state: RootState) => state.Auth)
+  const dispatch = useDispatch<AppDispatch>()
+
+  useEffect(() => {
+    if (AuthState.loading === loadingStatus.succeeded && AuthState.user)
+    switch (RecipesState.loading) {
+      case loadingStatus.idle:
+        dispatch(RecipesSlice.fetch(AuthState.user.token))
+        break
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [AuthState.loading, RecipesState.loading, RecipesState.list])
+
+  const recipe = RecipesState.list.find((recipe) => recipe.id == id)
+
+  if (!recipe) return null;
+
   return (
     <Card>
-      <RecipeHeader name={name} isPublic={isPublic} />
+      <RecipeHeader name={recipe.name} isPublic={ recipe.isPublic} />
       <RecipeContent
-        description={description}
-        preparationTimeSeconds={preparationTimeSeconds}
-        cookingTimeSeconds={cookingTimeSeconds}
+        description={recipe.description}
+        preparationTimeSeconds={recipe.preparationTimeSeconds}
+        cookingTimeSeconds={recipe.cookingTimeSeconds}
       />
     </Card>
   );
